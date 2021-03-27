@@ -27,7 +27,7 @@ allprojects {
 add the following to module build.gradle
 ```groovy
 
-implementation 'com.github.faisalcodes:bidirectional-seekbar:{latest-release}'
+implementation 'com.github.faisalcodes:bidirectional-seekbar:1.0'
 
 ```
 ### How to use
