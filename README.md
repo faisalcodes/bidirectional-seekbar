@@ -7,7 +7,7 @@
 
 --------------------------------------------------------------------
 Seek progress in both direction.
-
+<img src = "/demos/demo.gif">
 ### Implementation
 
 add the following to project level build.gradle
