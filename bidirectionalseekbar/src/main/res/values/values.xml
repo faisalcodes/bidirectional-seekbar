@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BiDirectionalSeekBar">
+        <!--    Set color to the indicator and label background.-->
+        <attr name="indicatorColor" format="color" />
+        <!--    Set color to the progress sticks.-->
+        <attr name="stickColor" format="color" />
+        <!--    Set color to the zero (0) progress stick.
+        This is ignored if (minValue > 0) or (maxValue < 0).-->
+        <attr name="zeroStickColor" format="color" />
+        <!--    Set color to the label text. This is useful when background color and text color of the label are mismatching.-->
+        <attr name="labelColor" format="color" />
+        <!--    Set color to the title text.-->
+        <attr name="titleColor" format="color" />
+        <!--    DEFAULT - 0-->
+        <attr name="minValue" format="integer" />
+        <!--    DEFAULT - 100-->
+        <attr name="maxValue" format="integer" />
+        <!--    Set progress to the seekBar.
+        if (progress &lt; minValue) or (progress &gt; maxValue),
+        then the progress becomes minValue or maxValue respectively.
+        <p>
+        DEFAULT - 0-->
+        <attr name="progress" format="integer" />
+        <!--    Set whether the percentage sign (%) should be shown with progress label or not. true if (%) should be shown false otherwise.
+        <p>
+        DEFAULT - False-->
+        <attr name="percentageSign" format="boolean" />
+        <!--    Set title to the seekBar.-->
+        <attr name="title" format="string" />
+        <!--    Set the size of which the title should be. If tiny is set, then the title size will be tiny. Otherwise it will be of normal size.
+        <p>
+        DEFAULT - normal-->
+        <attr name="titleSize" format="enum">
+            <enum name="tiny" value="0" />
+            <enum name="normal" value="1" />
+        </attr>
+    </declare-styleable>
+</resources>
