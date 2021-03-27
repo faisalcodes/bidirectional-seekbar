@@ -6,8 +6,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 --------------------------------------------------------------------
-Seek progress in both direction.
-<img src = "/demos/demo.gif">
+###Seek progress in both direction.
+<br><br>
+<img src = "/demos/demo.gif" height="500px">
+<br>
 ### Implementation
 
 add the following to project level build.gradle
