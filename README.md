@@ -1,18 +1,25 @@
-# Bi-directional Seekbar
+# Bi-Directional Seekbar
 
 [![](https://jitpack.io/v/faisalcodes/bidirectional-seekbar.svg)](https://jitpack.io/#faisalcodes/bidirectional-seekbar)
 
+--------------------------------------------------------------------
+Seek progress in both direction.
 
-### Usage
+### How to use
 
-add to project level build.gradle
+add the following to project level build.gradle
 ```groovy
 
-    maven { url "https://jitpack.io" }
+  allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+  }
 
 ```
 
-add to module build.gradle
+add the following to module build.gradle
 ```groovy
 
     implementation 'com.github.faisalcodes:bidirectional-seekbar:{latest-release}'
