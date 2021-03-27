@@ -68,7 +68,7 @@ public class BiDirectionalSeekBar extends LinearLayout {
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.BiDirectionalSeekBar, defStyleAttr, 0);
         mTitle = a.getString(R.styleable.BiDirectionalSeekBar_seekBarTitle);
         mTitleSize = a.getInt(R.styleable.BiDirectionalSeekBar_seekBarTitleSize, TITLE_NORMAL);
-        mTitleColor = a.getColor(R.styleable.BiDirectionalSeekBar_seekBarTitle, 0xFF000000);
+        mTitleColor = a.getColor(R.styleable.BiDirectionalSeekBar_seekBarTitleColor, 0xFF000000);
 
 
         mMinVal = a.getInt(R.styleable.BiDirectionalSeekBar_minValue, 0);
