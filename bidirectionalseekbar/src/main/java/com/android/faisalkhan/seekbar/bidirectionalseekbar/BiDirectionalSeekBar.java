@@ -66,8 +66,8 @@ public class BiDirectionalSeekBar extends LinearLayout {
         Resources.Theme theme = getContext().getTheme();
 
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.BiDirectionalSeekBar, defStyleAttr, 0);
-        mTitle = a.getString(R.styleable.BiDirectionalSeekBar_title);
-        mTitleSize = a.getInt(R.styleable.BiDirectionalSeekBar_titleSize, TITLE_NORMAL);
+        mTitle = a.getString(R.styleable.BiDirectionalSeekBar_seekBarTitle);
+        mTitleSize = a.getInt(R.styleable.BiDirectionalSeekBar_seekBarTitleSize, TITLE_NORMAL);
         mTitleColor = a.getColor(R.styleable.BiDirectionalSeekBar_titleColor, 0xFF000000);
 
 
@@ -332,7 +332,7 @@ public class BiDirectionalSeekBar extends LinearLayout {
     }
 
     @NonNull
-    public String getTitle() {
+    public String getSeekBarTitle() {
         return mTitle;
     }
 
@@ -341,8 +341,8 @@ public class BiDirectionalSeekBar extends LinearLayout {
      *
      * @param titleRes Title resource.
      */
-    public void setTitle(@StringRes int titleRes) {
-        setTitle(getContext().getString(titleRes));
+    public void setSeekBarTitle(@StringRes int titleRes) {
+        setSeekBarTitle(getContext().getString(titleRes));
     }
 
     /**
@@ -350,7 +350,7 @@ public class BiDirectionalSeekBar extends LinearLayout {
      *
      * @param title The title text.
      */
-    public void setTitle(@NonNull String title) {
+    public void setSeekBarTitle(@NonNull String title) {
         this.mTitle = title;
         if (titleView == null) initTitleView(getContext());
         else initTitleText();
@@ -365,7 +365,7 @@ public class BiDirectionalSeekBar extends LinearLayout {
      *
      * @param titleSize One of {@link #TITLE_TINY} or {@link #TITLE_NORMAL}
      */
-    public void setTitleSize(int titleSize) {
+    public void setSeekBarTitleSize(int titleSize) {
         mTitleSize = titleSize;
         initTitleSize();
     }

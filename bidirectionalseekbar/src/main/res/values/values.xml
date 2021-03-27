@@ -27,11 +27,11 @@
         DEFAULT - False-->
         <attr name="percentageSign" format="boolean" />
         <!--    Set title to the seekBar.-->
-        <attr name="title" format="string" />
+        <attr name="seekBarTitle" format="string" />
         <!--    Set the size of which the title should be. If tiny is set, then the title size will be tiny. Otherwise it will be of normal size.
         <p>
         DEFAULT - normal-->
-        <attr name="titleSize" format="enum">
+        <attr name="seekBarTitleSize" format="enum">
             <enum name="tiny" value="0" />
             <enum name="normal" value="1" />
         </attr>
