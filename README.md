@@ -30,7 +30,7 @@ add the following to module build.gradle
 implementation 'com.github.faisalcodes:bidirectional-seekbar:1.0'
 
 ```
-### How to use
+## How to use
 
 ### XML
 ```xml
@@ -65,7 +65,7 @@ seekBar.setSeekBarTitleColor(0xFF952400);
 seekBar.setStickColor(0xFF555555);
 seekBar.setZeroStickColor(0xFF000000);
 ```
-### Progress Change Listener
+#### Progress Change Listener
 ```java
 seekBar.setOnProgressChangeListener(new BiDirectionalSeekBar.OnProgressChangeListener() {
     @Override
