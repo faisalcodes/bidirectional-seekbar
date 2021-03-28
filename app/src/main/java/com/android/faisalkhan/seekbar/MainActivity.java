@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final ImageView sampleImage = findViewById(R.id.sampleImage);
-        BiDirectionalSeekBar seekBar = findViewById(R.id.seekBar);
+        final BiDirectionalSeekBar seekBar = findViewById(R.id.seekBar);
 
         final AtomicInteger initialX = new AtomicInteger(0);
         sampleImage.post(new Runnable() {
@@ -29,12 +29,21 @@ public class MainActivity extends AppCompatActivity {
                 sampleImage.setX(initialX.get());
             }
         });
-
-        seekBar.setOnProgressChangeListener(new BiDirectionalSeekBar.OnProgressChangeListener() {
+        seekBar.setOnSeekBarChangeListener(new BiDirectionalSeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgress(int progress) {
+            public void onStartTrackingTouch(BiDirectionalSeekBar seekBar) {
+                Log.d(TAG, "start touch: ");
+            }
+
+            @Override
+            public void onProgressChanged(BiDirectionalSeekBar seekBar, int progress, boolean fromUser) {
                 sampleImage.setX(initialX.get() + progress);
-                Log.d(TAG, "onCreate: " + progress);
+                Log.d(TAG, "onCreate: " + progress + " " + fromUser);
+            }
+
+            @Override
+            public void onStopTrackingTouch(BiDirectionalSeekBar seekBar) {
+                Log.d(TAG, "stop touch: ");
             }
         });
     }

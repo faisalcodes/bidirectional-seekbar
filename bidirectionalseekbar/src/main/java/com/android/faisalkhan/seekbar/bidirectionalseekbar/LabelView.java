@@ -11,7 +11,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -42,10 +41,9 @@ public class LabelView extends RelativeLayout {
     private void initThis() {
         setLabelBGColor();
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
-        params.gravity = Gravity.CENTER;
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
+        params.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
         params.topMargin = 10;
-        params.bottomMargin = -2;
         setLayoutParams(params);
         setGravity(Gravity.CENTER);
     }

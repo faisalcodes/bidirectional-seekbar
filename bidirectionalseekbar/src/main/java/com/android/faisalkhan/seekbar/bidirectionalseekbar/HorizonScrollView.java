@@ -2,17 +2,18 @@
  * Copyright (c) 2021 Faisal Khan (faisalkhan100@gmail.com)
  * All Rights Reserved.
  */
-package com.android.faisalkhan.seekbar.bidirectionalseekbar.utils;
+package com.android.faisalkhan.seekbar.bidirectionalseekbar;
 
-import android.content.Context;
-import android.util.AttributeSet;
+import android.annotation.SuppressLint;
 import android.view.MotionEvent;
 import android.widget.HorizontalScrollView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
+@SuppressLint("ViewConstructor")
 public class HorizonScrollView extends HorizontalScrollView {
+    @NonNull
+    private final BiDirectionalSeekBar seekBar;
     private boolean scrollStart = false;
     private final Runnable runnable;
     private OnScrollStartListener startListener;
@@ -20,16 +21,9 @@ public class HorizonScrollView extends HorizontalScrollView {
     private OnScrollStopListener stopListener;
     private int prevPosition;
 
-    public HorizonScrollView(@NonNull Context context) {
-        this(context, null);
-    }
-
-    public HorizonScrollView(@NonNull Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public HorizonScrollView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+    public HorizonScrollView(@NonNull BiDirectionalSeekBar seekBar) {
+        super(seekBar.getContext());
+        this.seekBar = seekBar;
         requestDisallowInterceptTouchEvent(true);
 
         runnable = new Runnable() {
@@ -78,8 +72,10 @@ public class HorizonScrollView extends HorizontalScrollView {
     public boolean dispatchTouchEvent(@NonNull MotionEvent e) {
         if (e.getAction() == MotionEvent.ACTION_DOWN) {
             scrollStart = true;
+            if (seekBar.mSeekBarChangeListener != null) seekBar.mSeekBarChangeListener.onStartTrackingTouch(seekBar);
         }
         if (e.getAction() == MotionEvent.ACTION_UP) {
+            if (seekBar.mSeekBarChangeListener != null) seekBar.mSeekBarChangeListener.onStopTrackingTouch(seekBar);
             startScrollerTask();
         }
         return super.dispatchTouchEvent(e);

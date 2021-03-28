@@ -12,6 +12,7 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Shader;
 import android.view.Gravity;
 import android.view.View;
@@ -20,25 +21,35 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.android.faisalkhan.seekbar.bidirectionalseekbar.utils.HorizonScrollView;
-
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static com.android.faisalkhan.seekbar.bidirectionalseekbar.BiDirectionalSeekBar.STYLE_LINEAR;
+import static com.android.faisalkhan.seekbar.bidirectionalseekbar.HorizonScrollView.OnScrollListener;
+import static com.android.faisalkhan.seekbar.bidirectionalseekbar.HorizonScrollView.OnScrollStartListener;
+import static com.android.faisalkhan.seekbar.bidirectionalseekbar.HorizonScrollView.OnScrollStopListener;
 
 @SuppressLint("ViewConstructor")
-public class StickScroller extends RelativeLayout implements HorizonScrollView.OnScrollListener,
-        HorizonScrollView.OnScrollStartListener, HorizonScrollView.OnScrollStopListener {
-    private static final String TAG = "myLogs";
+public class StickScroller extends RelativeLayout implements OnScrollListener, OnScrollStartListener, OnScrollStopListener {
+    private final Paint gradientPaintL = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint gradientPaintR = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Rect gradientRectL = new Rect();
+    private final Rect gradientRectR = new Rect();
+    private final Paint clipPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final RectF clipRectL = new RectF();
+    private final RectF clipRectR = new RectF();
+    private final RectF arcL = new RectF();
+    private final RectF arcR = new RectF();
     private final BiDirectionalSeekBar seekBar;
     private final LinearLayout stickContainer;
+    private RelativeLayout stickContainerSuper;
     private HorizonScrollView scrollView;
     private Indicator indicator;
-
-    private Paint gradientPaintL, gradientPaintR;
-    private Rect gradientRectL, gradientRectR;
+    private int mSeekBarCenter;
     private int fadeLength;
+    private boolean fromUser;
+    private int height;
 
-    public StickScroller(BiDirectionalSeekBar seekBar, Context context) {
+    public StickScroller(final BiDirectionalSeekBar seekBar, Context context) {
         super(context);
         this.seekBar = seekBar;
         stickContainer = new LinearLayout(context);
@@ -46,31 +57,47 @@ public class StickScroller extends RelativeLayout implements HorizonScrollView.O
     }
 
     private void init() {
+        initHeight();
         initPaint();
         initThis();
     }
 
     private void initPaint() {
-        gradientPaintL = new Paint(Paint.ANTI_ALIAS_FLAG);
-        gradientPaintR = new Paint(Paint.ANTI_ALIAS_FLAG);
-
         gradientPaintL.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
         gradientPaintR.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
 
-        gradientRectL = new Rect();
-        gradientRectR = new Rect();
+        if (seekBar.mStyle == STYLE_LINEAR) {
+            clipPaint.setXfermode(null);
+        } else {
+            clipPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+            clipPaint.setStyle(Paint.Style.FILL);
+        }
     }
 
     private void initThis() {
-        setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT, seekBar.STICK_MAX_HEIGHT));
+        LayoutParams params = new LayoutParams(MATCH_PARENT, height);
+        params.addRule(CENTER_HORIZONTAL, TRUE);
+        params.addRule(ALIGN_PARENT_BOTTOM, TRUE);
+        setLayoutParams(params);
+
         initScrollView();
         initIndicator();
     }
 
-    private void initScrollView() {
-        scrollView = new HorizonScrollView(getContext());
+    private void updateThisParams() {
+        ViewGroup.LayoutParams params = getLayoutParams();
+        params.height = height;
+        setLayoutParams(params);
+    }
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(WRAP_CONTENT, MATCH_PARENT);
+    private void initHeight() {
+        height = seekBar.mStyle == STYLE_LINEAR ? seekBar.STICK_HEIGHT_LINEAR : seekBar.STICK_MAX_HEIGHT;
+    }
+
+    private void initScrollView() {
+        scrollView = new HorizonScrollView(seekBar);
+
+        LayoutParams params = new LayoutParams(WRAP_CONTENT, MATCH_PARENT);
         params.addRule(CENTER_HORIZONTAL, TRUE);
         params.addRule(ALIGN_PARENT_BOTTOM, TRUE);
         scrollView.setLayoutParams(params);
@@ -84,13 +111,6 @@ public class StickScroller extends RelativeLayout implements HorizonScrollView.O
         initStickContainer();
 
         addView(scrollView);
-
-        scrollView.post(new Runnable() {
-            @Override
-            public void run() {
-                scrollView.setScrollX(seekBar.calculateScroll());
-            }
-        });
     }
 
     private void initIndicator() {
@@ -99,11 +119,10 @@ public class StickScroller extends RelativeLayout implements HorizonScrollView.O
     }
 
     private void initStickContainer() {
-        RelativeLayout stickContainerSuper = new RelativeLayout(getContext());
-        stickContainerSuper.setLayoutParams(new ViewGroup.LayoutParams(WRAP_CONTENT, seekBar.STICK_MAX_HEIGHT));
-
+        stickContainerSuper = new RelativeLayout(getContext());
+        stickContainerSuper.setLayoutParams(new ViewGroup.LayoutParams(WRAP_CONTENT, height));
         stickContainer.setOrientation(LinearLayout.HORIZONTAL);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
+        LayoutParams params = new LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
         params.addRule(CENTER_IN_PARENT, TRUE);
         stickContainer.setLayoutParams(params);
         stickContainer.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -115,7 +134,13 @@ public class StickScroller extends RelativeLayout implements HorizonScrollView.O
         scrollView.addView(stickContainerSuper);
     }
 
-    public void initSticks() {
+    private void updateStickContainerParams() {
+        ViewGroup.LayoutParams params = stickContainerSuper.getLayoutParams();
+        params.height = height;
+        stickContainerSuper.setLayoutParams(params);
+    }
+
+    public final void initSticks() {
         stickContainer.removeAllViews();
         int maxValue = seekBar.getMaxValue() - seekBar.getMinValue();
         for (int i = 0; i <= maxValue; i++) {
@@ -124,31 +149,49 @@ public class StickScroller extends RelativeLayout implements HorizonScrollView.O
         }
     }
 
-    public void initSticksColor() {
+    public final void onUpdateStyle() {
+        initHeight();
+        updateThisParams();
+        updateStickContainerParams();
+        initPaint();
+        indicator.onUpdateStyle();
+
         int count = stickContainer.getChildCount();
         for (int i = 0; i < count; i++) {
             View child = stickContainer.getChildAt(i);
-            if (child instanceof ProgressStick) {
-                ((ProgressStick) child).initStickColor();
-            }
+            if (child instanceof ProgressStick) ((ProgressStick) child).onUpdateStyle();
         }
+
+        invalidate();
+        requestLayout();
     }
 
-    public void initPadding(int seekBarCenter) {
+    public final void initPadding(int seekBarCenter) {
+        mSeekBarCenter = seekBarCenter;
         stickContainer.setPadding(seekBarCenter, 0, seekBarCenter, 0);
         fadeLength = seekBarCenter * 4 / 5;
     }
 
-    LinearLayout getStickContainer() {
+    final LinearLayout getStickContainer() {
         return stickContainer;
     }
 
-    Indicator getIndicator() {
-        return indicator;
+    final HorizontalScrollView getScrollView() {
+        return scrollView;
     }
 
-    HorizontalScrollView getScrollView() {
-        return scrollView;
+    public final void refreshProgress(boolean animate) {
+        if (animate) {
+            refreshProgressWithAnimation();
+            return;
+        }
+
+        scrollView.scrollTo(seekBar.calculateScroll(), 0);
+    }
+
+    private void refreshProgressWithAnimation() {
+        int scroll = seekBar.calculateScroll();
+        scrollView.smoothScrollTo(scroll, 0);
     }
 
     private void initFade() {
@@ -172,6 +215,24 @@ public class StickScroller extends RelativeLayout implements HorizonScrollView.O
 
         gradientRectR.set(l2, t, r2, b);
         gradientPaintR.setShader(new LinearGradient(l2, t, r2, t, FADE_COLORS_REVERSE, null, Shader.TileMode.CLAMP));
+
+
+        if (seekBar.mStyle != STYLE_LINEAR) {
+            int nB = seekBar.STICK_MAX_HEIGHT - seekBar.STICK_MIN_HEIGHT;
+            int arcExtra = mSeekBarCenter - fadeLength;
+            int arcOffset = indicator.mWidth >> 1;
+
+            clipRectL.set(l1, t, r1, nB);
+            arcL.set(fadeLength - (arcExtra), (t - nB), mSeekBarCenter - (arcOffset), nB);
+
+            clipRectR.set(l2, t, r2, nB);
+            arcR.set(mSeekBarCenter + (arcOffset), t - (nB), l2 + arcExtra, nB);
+        } else {
+            clipRectL.setEmpty();
+            clipRectR.setEmpty();
+            arcL.setEmpty();
+            arcR.setEmpty();
+        }
     }
 
     @Override
@@ -181,11 +242,20 @@ public class StickScroller extends RelativeLayout implements HorizonScrollView.O
         super.dispatchDraw(canvas);
         canvas.drawRect(gradientRectL, gradientPaintL);
         canvas.drawRect(gradientRectR, gradientPaintR);
+
+        if (seekBar.mStyle != STYLE_LINEAR) {
+            canvas.drawRect(clipRectL, clipPaint);
+            canvas.drawArc(arcL, 0f, 90f, true, clipPaint);
+
+            canvas.drawRect(clipRectR, clipPaint);
+            canvas.drawArc(arcR, 90f, 180f, true, clipPaint);
+        }
         canvas.restoreToCount(count);
     }
 
     @Override
     public void onScrollChanged(int l, int t, int oldL, int oldT) {
+        if (!fromUser) return;
         int maxVal = seekBar.mMaxVal;
         int minVal = seekBar.mMinVal;
         int progress = seekBar.mProgress;
@@ -201,18 +271,19 @@ public class StickScroller extends RelativeLayout implements HorizonScrollView.O
         if (stickPosition < minVal) stickPosition = minVal;
 
         if (stickPosition == progress) return;
-        seekBar.changeProgress(stickPosition);
+        seekBar.changeProgress(stickPosition, false, fromUser);
     }
 
     @Override
     public void onScrollStart() {
-        seekBar.labelView.animate().scaleX(1.3f).scaleY(1.3f).setDuration(150).start();
+        fromUser = true;
+        seekBar.labelView.animate().scaleX(1.2f).scaleY(1.2f).setDuration(150).start();
     }
 
     @Override
     public void onScrollStopped() {
-        int scroll = seekBar.calculateScroll();
-        scrollView.smoothScrollTo(scroll, 0);
+        refreshProgressWithAnimation();
         seekBar.labelView.animate().scaleX(1f).scaleY(1f).setDuration(150).start();
+        fromUser = false;
     }
 }

@@ -11,7 +11,10 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import static com.android.faisalkhan.seekbar.bidirectionalseekbar.BiDirectionalSeekBar.STYLE_LINEAR;
 
 @SuppressLint("ViewConstructor")
 public class ProgressStick extends View {
@@ -19,26 +22,19 @@ public class ProgressStick extends View {
     private final StickScroller stickScroller;
     private final int progressValue;
     private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-    private final RectF rectF;
     private final int dimenH;
-    private final int dimenV;
-    private final int dimenVZero;
+    private RectF rectF;
+    private int dimenV;
+    private int dimenVZero;
 
     public ProgressStick(BiDirectionalSeekBar seekBar, StickScroller stickScroller, Context context, int progressValue) {
         super(context);
         this.seekBar = seekBar;
         this.stickScroller = stickScroller;
         this.progressValue = progressValue;
-        this.dimenH = seekBar.STICK_WIDTH;
-        this.dimenV = seekBar.STICK_MAX_HEIGHT - 30;
-        this.dimenVZero = seekBar.STICK_MAX_HEIGHT - 20;
-
-        int centerH = dimenH / 2;
-        if (progressValue == 0) {
-            rectF = new RectF(centerH - 2f, 0, centerH + 2f, dimenVZero);
-        } else {
-            rectF = new RectF(centerH - 1.5f, 0, centerH + 1.5f, dimenV);
-        }
+        this.dimenH = (int) Math.max(seekBar.STICK_WIDTH, seekBar.mStickGap);
+        this.dimenV = seekBar.mStyle == STYLE_LINEAR ? seekBar.STICK_HEIGHT_LINEAR - 30 : seekBar.STICK_MAX_HEIGHT;
+        this.dimenVZero = seekBar.mStyle == STYLE_LINEAR ? seekBar.STICK_HEIGHT_LINEAR - 20 : seekBar.STICK_MAX_HEIGHT;
 
         initStick();
     }
@@ -46,7 +42,6 @@ public class ProgressStick extends View {
     private void initStick() {
         initThis();
         initPaint();
-        initPath();
     }
 
     private void initThis() {
@@ -56,28 +51,37 @@ public class ProgressStick extends View {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                seekBar.changeProgress(progressValue);
-                stickScroller.onScrollStopped();
+                seekBar.changeProgress(progressValue, false, true);
+                stickScroller.refreshProgress(true);
             }
         });
     }
 
+    private void updateParams() {
+        ViewGroup.LayoutParams params = getLayoutParams();
+        params.height = progressValue == 0 ? dimenVZero : dimenV;
+        setLayoutParams(params);
+    }
+
     private void initPaint() {
-        initStickColor();
         paint.setStyle(Paint.Style.FILL);
-    }
-
-    void initStickColor() {
-        paint.setColor(progressValue == 0 ? seekBar.zeroStickColor() : seekBar.stickColor());
-        invalidate();
-    }
-
-    private void initPath() {
+        int centerH = dimenH / 2;
+        if (progressValue == 0) rectF = new RectF(centerH - 2f, 0, centerH + 2f, dimenVZero);
+        else rectF = new RectF(centerH - 1.5f, 0, centerH + 1.5f, dimenV);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
+        paint.setColor(progressValue == 0 ? seekBar.zeroStickColor() : seekBar.stickColor());
         canvas.drawRoundRect(rectF, 10, 10, paint);
         super.onDraw(canvas);
+    }
+
+    public final void onUpdateStyle() {
+        this.dimenV = seekBar.mStyle == STYLE_LINEAR ? seekBar.STICK_HEIGHT_LINEAR - 30 : seekBar.STICK_MAX_HEIGHT;
+        this.dimenVZero = seekBar.mStyle == STYLE_LINEAR ? seekBar.STICK_HEIGHT_LINEAR - 20 : seekBar.STICK_MAX_HEIGHT;
+        updateParams();
+        initPaint();
+        invalidate();
     }
 }

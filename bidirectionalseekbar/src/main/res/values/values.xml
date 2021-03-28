@@ -1,20 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="BiDirectionalSeekBar">
-        <!--    Set color to the indicator and label background.-->
-        <attr name="indicatorColor" format="color" />
-        <!--    Set color to the progress sticks.-->
+        <!--
+        Set color to the indicator and label background.
+        By default, it uses theme primary color.
+        -->
+        <attr name="indicatorColor" />
+        <!--
+        Set color to the progress sticks. By default, it uses theme secondary text color.
+        -->
         <attr name="stickColor" format="color" />
-        <!--    Set color to the zero (0) progress stick.
-        This is ignored if (minValue > 0) or (maxValue < 0).-->
+        <!--    Set gap between the progress sticks.-->
+        <attr name="stickGap" format="dimension" />
+        <!--
+        Set color to the stick at zero (0) progress
+        This is ignored if (minValue > 0) or (maxValue < 0).
+        By default, it uses theme primary text color.
+        -->
         <attr name="zeroStickColor" format="color" />
-        <!--    Set color to the label text. This is useful when background color and text color of the label are mismatching.-->
+        <!--
+        Set color to the label text. This is useful when background color and text color of the label are mismatching.
+        By default, it uses theme primary text color.
+        -->
         <attr name="labelColor" format="color" />
-        <!--    Set color to the title text.-->
+        <!--
+        Set color to the title text.
+        -->
         <attr name="seekBarTitleColor" format="color" />
-        <!--    DEFAULT - 0-->
+        <!-- DEFAULT - 0 -->
         <attr name="minValue" format="integer" />
-        <!--    DEFAULT - 100-->
+        <!-- DEFAULT - 100 -->
         <attr name="maxValue" format="integer" />
         <!--    Set progress to the seekBar.
         if (progress &lt; minValue) or (progress &gt; maxValue),
@@ -22,7 +37,7 @@
         <p>
         DEFAULT - 0-->
         <attr name="progress" format="integer" />
-        <!--    Set whether the percentage sign (%) should be shown with progress label or not. true if (%) should be shown false otherwise.
+        <!--    Set whether the percentage sign (%) should be shown with progress label. True if (%) should be shown false otherwise.
         <p>
         DEFAULT - False-->
         <attr name="percentageSign" format="boolean" />
@@ -34,6 +49,13 @@
         <attr name="seekBarTitleSize" format="enum">
             <enum name="tiny" value="0" />
             <enum name="normal" value="1" />
+        </attr>
+        <!--    Set the style of the seekBar.
+        <p>
+        DEFAULT - curve-->
+        <attr name="seekBar_Style" format="enum">
+            <enum name="curve" value="0" />
+            <enum name="linear" value="1" />
         </attr>
     </declare-styleable>
 </resources>

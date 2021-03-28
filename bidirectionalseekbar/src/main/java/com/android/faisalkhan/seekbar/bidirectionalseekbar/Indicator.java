@@ -10,27 +10,27 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import static android.widget.RelativeLayout.CENTER_IN_PARENT;
 import static android.widget.RelativeLayout.TRUE;
+import static com.android.faisalkhan.seekbar.bidirectionalseekbar.BiDirectionalSeekBar.STYLE_LINEAR;
 
 @SuppressLint("ViewConstructor")
 public class Indicator extends View {
     private final BiDirectionalSeekBar seekBar;
     private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-    private final RectF rectF;
+    public int mWidth;
     private final int dimenH;
-    private final int dimenV;
+    private RectF rectF;
+    private int dimenV;
 
     public Indicator(BiDirectionalSeekBar seekBar, Context context) {
         super(context);
         this.seekBar = seekBar;
         this.dimenH = seekBar.STICK_WIDTH;
-        this.dimenV = seekBar.STICK_MAX_HEIGHT;
-
-        int centerH = dimenH / 2;
-        rectF = new RectF(centerH - 3, 0, centerH + 3, dimenV);
+        this.dimenV = seekBar.mStyle == STYLE_LINEAR ? seekBar.STICK_HEIGHT_LINEAR : seekBar.STICK_MAX_HEIGHT;
         init();
     }
 
@@ -41,9 +41,23 @@ public class Indicator extends View {
         initPaint();
     }
 
+    private void updateParams() {
+        ViewGroup.LayoutParams params = getLayoutParams();
+        params.height = dimenV;
+        setLayoutParams(params);
+    }
+
     private void initPaint() {
+        initRect();
         paint.setStyle(Paint.Style.FILL);
-        setColor();
+    }
+
+    private void initRect() {
+        int centerH = dimenH / 2;
+        int l = centerH - 3;
+        int r = l + 6;
+        mWidth = r;
+        rectF = new RectF(l, 0, r, dimenV);
     }
 
     @Override
@@ -53,8 +67,10 @@ public class Indicator extends View {
         super.onDraw(canvas);
     }
 
-    public void setColor() {
-        paint.setColor(seekBar.mIndicatorColor);
+    public final void onUpdateStyle() {
+        this.dimenV = seekBar.mStyle == STYLE_LINEAR ? seekBar.STICK_HEIGHT_LINEAR : seekBar.STICK_MAX_HEIGHT;
+        initRect();
+        updateParams();
         invalidate();
     }
 }
