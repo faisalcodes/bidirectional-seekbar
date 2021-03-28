@@ -7,10 +7,16 @@
 
 --------------------------------------------------------------------
 Seek progress in both direction.
+<br>
+<br>
+_*Style Curve.*_
 <br><br>
+<img src = "/demos/demo_style_curve.gif" height="500px">
+<br>
+<br>
 _*Style linear.*_
 <br><br>
-<img src = "/demos/demo.gif" height="500px">
+<img src = "/demos/demo_style_linear.gif" height="500px">
 <br>
 ### Implementation
 
