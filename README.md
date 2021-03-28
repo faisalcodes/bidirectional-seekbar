@@ -50,7 +50,8 @@ implementation 'com.github.faisalcodes:bidirectional-seekbar:1.0'
     app:seekBarTitleSize="tiny"
     app:stickColor="#555555"
     app:stickGap="30dp"
-    app:zeroStickColor="#000000" />
+    app:zeroStickColor="#000000"
+    app:seekBar_Style="curve"/>
 ```
 
 ### Java
@@ -118,8 +119,10 @@ public static final int STYLE_LINEAR;
 | seekBarTitle  | setSeekBarTitle(@StringRes or String)<br>getSeekBarTitle() | Set title to the seekBar.<br>Get title of the seekBar. |
 | seekBarTitleSize  | setSeekBarSize(int) | Set the size of which the title should be. One of TITLE_TINY and TITLE_NORMAL . DEFAULT - TITLE_TINY |
 | seekBarTitleColor | setSeekBarColor(int) | Set color to the title text. |
-| stickColor | setStickColor(int) | Set color to the progress sticks. |
+| labelColor | setLabelColor(int) | Set color to the label text. This is useful when background color and text color of the label are mismatching. By default, it uses theme primary text color. |
+| indicatorColor | setIndicatorColor(int) | Set color to the indicator and label background. By default, it uses theme primary color. |
+| stickColor | setStickColor(int) | Set color to the progress sticks. By default, it uses theme secondary text color. |
 | stickGap | setStickGap(int) | Set gap between the sticks. This is useful to make seekBar look good when total progress sticks are lesser in count. |
-| zeroStickColor | setZeroStickColor(int) | Set color to the stick at zero (0) progress. This is ignored if (minValue > 0) or (maxValue < 0). |
+| zeroStickColor | setZeroStickColor(int) | Set color to the stick at zero (0) progress. This is ignored if (minValue > 0) or (maxValue < 0). By default, it uses theme primary text color. |
 | percentageSign| setPercentageSign(boolean) | Set whether the percentage sign (%) should be shown with progress label. True if (%) should be shown false otherwise. DEFAULT - False |
 | seekBar_Style | setSeekBarStyle(int) | Set the style of the seekBar. One of STYLE_CURVE and STYLE_LINEAR DEFAULT - STYLE_CURVE |
