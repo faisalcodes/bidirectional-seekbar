@@ -67,7 +67,7 @@ public class BiDirectionalSeekBar extends LinearLayout {
     }
 
     public BiDirectionalSeekBar(@NonNull Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, R.attr.recyclerViewStyle);
+        this(context, attrs, 0);
     }
 
     public BiDirectionalSeekBar(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -120,14 +120,6 @@ public class BiDirectionalSeekBar extends LinearLayout {
         setOrientation(VERTICAL);
         setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
         setPadding(0, 0, 0, 5);
-        post(new Runnable() {
-            @Override
-            public void run() {
-                if (mTitle == null) {
-                    ((ViewGroup) titleView.getParent()).removeView(titleView);
-                }
-            }
-        });
     }
 
     private void initInnerContainer(Context context) {
@@ -168,6 +160,7 @@ public class BiDirectionalSeekBar extends LinearLayout {
     }
 
     private void initTitleView(Context context) {
+        if (mTitle == null) return;
         titleView = new AppCompatTextView(context);
         initTitleText();
         initTitleColor();
@@ -183,7 +176,7 @@ public class BiDirectionalSeekBar extends LinearLayout {
     }
 
     private void initTitleText() {
-        titleView.setText(mTitle == null ? ("SeekBar title") : mTitle);
+        titleView.setText(mTitle);
     }
 
     private void initTitleColor() {
