@@ -45,19 +45,19 @@ implementation 'com.github.faisalcodes:bidirectional-seekbar:1.0.1'
 <com.android.faisalkhan.seekbar.bidirectionalseekbar.BiDirectionalSeekBar
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:indicatorColor="#952400"
-    app:labelColor="#ffffff"
-    app:maxValue="50"
-    app:minValue="-50"
-    app:percentageSign="true"
-    app:progress="10"
-    app:seekBarTitle="My SeekBar"
-    app:seekBarTitleColor="#952400"
-    app:seekBarTitleSize="tiny"
-    app:stickColor="#555555"
-    app:stickGap="30dp"
-    app:zeroStickColor="#000000"
-    app:seekBar_Style="curve"/>
+    app:BDS_indicatorColor="#952400"
+    app:BDS_labelColor="#ffffff"
+    app:BDS_maxValue="50"
+    app:BDS_minValue="-50"
+    app:BDS_percentageSign="true"
+    app:BDS_progress="10"
+    app:BDS_seekBarTitle="My SeekBar"
+    app:BDS_seekBarTitleColor="#952400"
+    app:BDS_seekBarTitleSize="tiny"
+    app:BDS_stickColor="#555555"
+    app:BDS_stickGap="30dp"
+    app:BDS_zeroStickColor="#000000"
+    app:BDS_seekBar_Style="curve"/>
 ```
 
 ### Java
@@ -119,19 +119,19 @@ public static final int STYLE_LINEAR;
 ## Attributes
 | XML Attribute | Java methods                      | Description                                                              |
 |---------------|-----------------------------------|--------------------------------------------------------------------------|
-| minValue      | setMinValue(int)<br>getMinValue() | Set the minimum value for seekBar.<br>Get the minimum value for seekBar. |
-| maxValue      | setMaxValue(int)<br>getMaxValue() | Set the maximum value for seekBar.<br>Get the maximum value for seekBar. |
-| progress      | setProgress(int)<br><br>getProgress() | Set progress to the seekBar. If (progress < minValue) or (progress > maxValue), then the progress becomes minValue or maxValue respectively. DEFAULT - 0<br><br>Get current progress value of seekBar. |
-| seekBarTitle  | setSeekBarTitle(@StringRes or String)<br>getSeekBarTitle() | Set title to the seekBar.<br>Get title of the seekBar. |
-| seekBarTitleSize  | setSeekBarSize(int) | Set the size of which the title should be. One of TITLE_TINY and TITLE_NORMAL . DEFAULT - TITLE_TINY |
-| seekBarTitleColor | setSeekBarColor(int) | Set color to the title text. |
-| labelColor | setLabelColor(int) | Set color to the label text. This is useful when background color and text color of the label are mismatching. By default, it uses theme primary text color. |
-| indicatorColor | setIndicatorColor(int) | Set color to the indicator and label background. By default, it uses theme primary color. |
-| stickColor | setStickColor(int) | Set color to the progress sticks. By default, it uses theme secondary text color. |
-| stickGap | setStickGap(int) | Set gap between the sticks. This is useful to make seekBar look good when total progress sticks are lesser in count. |
-| zeroStickColor | setZeroStickColor(int) | Set color to the stick at zero (0) progress. This is ignored if (minValue > 0) or (maxValue < 0). By default, it uses theme primary text color. |
-| percentageSign| setPercentageSign(boolean) | Set whether the percentage sign (%) should be shown with progress label. True if (%) should be shown false otherwise. DEFAULT - False |
-| seekBar_Style | setSeekBarStyle(int) | Set the style of the seekBar. One of STYLE_CURVE and STYLE_LINEAR DEFAULT - STYLE_CURVE |
+| BDS_minValue      | setMinValue(int)<br>getMinValue() | Set the minimum value for seekBar.<br>Get the minimum value for seekBar. |
+| BDS_maxValue      | setMaxValue(int)<br>getMaxValue() | Set the maximum value for seekBar.<br>Get the maximum value for seekBar. |
+| BDS_progress      | setProgress(int)<br><br>getProgress() | Set progress to the seekBar. If (progress < minValue) or (progress > maxValue), then the progress becomes minValue or maxValue respectively. DEFAULT - 0<br><br>Get current progress value of seekBar. |
+| BDS_seekBarTitle  | setSeekBarTitle(@StringRes or String)<br>getSeekBarTitle() | Set title to the seekBar.<br>Get title of the seekBar. |
+| BDS_seekBarTitleSize  | setSeekBarSize(int) | Set the size of which the title should be. One of TITLE_TINY and TITLE_NORMAL . DEFAULT - TITLE_TINY |
+| BDS_seekBarTitleColor | setSeekBarColor(int) | Set color to the title text. |
+| BDS_labelColor | setLabelColor(int) | Set color to the label text. This is useful when background color and text color of the label are mismatching. By default, it uses theme primary text color. |
+| BDS_indicatorColor | setIndicatorColor(int) | Set color to the indicator and label background. By default, it uses theme primary color. |
+| BDS_stickColor | setStickColor(int) | Set color to the progress sticks. By default, it uses theme secondary text color. |
+| BDS_stickGap | setStickGap(int) | Set gap between the sticks. This is useful to make seekBar look good when total progress sticks are lesser in count. |
+| BDS_zeroStickColor | setZeroStickColor(int) | Set color to the stick at zero (0) progress. This is ignored if (minValue > 0) or (maxValue < 0). By default, it uses theme primary text color. |
+| BDS_percentageSign| setPercentageSign(boolean) | Set whether the percentage sign (%) should be shown with progress label. True if (%) should be shown false otherwise. DEFAULT - False |
+| BDS_seekBar_Style | setSeekBarStyle(int) | Set the style of the seekBar. One of STYLE_CURVE and STYLE_LINEAR DEFAULT - STYLE_CURVE |
 
 ## License
 ```
