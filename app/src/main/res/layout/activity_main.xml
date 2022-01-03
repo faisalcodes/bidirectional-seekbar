@@ -21,11 +21,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        app:maxValue="50"
-        app:labelColor="#fff"
-        app:minValue="-50"
-        app:seekBarTitle="BiDirectional SeekBar"
-        app:seekBar_Style="curve" />
+        app:BDS_maxValue="50"
+        app:BDS_labelColor="#fff"
+        app:BDS_minValue="-50"
+        app:BDS_seekBarTitle="BiDirectional SeekBar"
+        app:BDS_seekBar_Style="curve" />
 
     <TextView
         android:layout_width="wrap_content"

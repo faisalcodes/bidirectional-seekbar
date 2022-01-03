@@ -75,35 +75,35 @@ public class BiDirectionalSeekBar extends LinearLayout {
         Resources.Theme theme = getContext().getTheme();
 
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.BiDirectionalSeekBar, defStyleAttr, 0);
-        mTitle = a.getString(R.styleable.BiDirectionalSeekBar_seekBarTitle);
-        mTitleSize = a.getInt(R.styleable.BiDirectionalSeekBar_seekBarTitleSize, TITLE_TINY);
+        mTitle = a.getString(R.styleable.BiDirectionalSeekBar_BDS_seekBarTitle);
+        mTitleSize = a.getInt(R.styleable.BiDirectionalSeekBar_BDS_seekBarTitleSize, TITLE_TINY);
 
         TypedArray a2 = theme.obtainStyledAttributes(new int[]{android.R.attr.textColorPrimary,
                 android.R.attr.textColorSecondaryInverse});
         int priTextColor = a2.getColor(0, 0xFF000000);
         int secTextColor = a2.getColor(0, 0xFF222222);
-        mTitleColor = a.getColor(R.styleable.BiDirectionalSeekBar_seekBarTitleColor, priTextColor);
+        mTitleColor = a.getColor(R.styleable.BiDirectionalSeekBar_BDS_seekBarTitleColor, priTextColor);
         a2.recycle();
 
 
-        mMinVal = a.getInt(R.styleable.BiDirectionalSeekBar_minValue, 0);
-        mMaxVal = a.getInt(R.styleable.BiDirectionalSeekBar_maxValue, 100);
+        mMinVal = a.getInt(R.styleable.BiDirectionalSeekBar_BDS_minValue, 0);
+        mMaxVal = a.getInt(R.styleable.BiDirectionalSeekBar_BDS_maxValue, 100);
 
-        mProgress = a.getInt(R.styleable.BiDirectionalSeekBar_progress, 0);
-        percentageSign = a.getBoolean(R.styleable.BiDirectionalSeekBar_percentageSign, false);
+        mProgress = a.getInt(R.styleable.BiDirectionalSeekBar_BDS_progress, 0);
+        percentageSign = a.getBoolean(R.styleable.BiDirectionalSeekBar_BDS_percentageSign, false);
 
 
         TypedValue indicatorTypedValue = new TypedValue();
         boolean resolved = theme.resolveAttribute(R.attr.colorPrimary, indicatorTypedValue, true);
-        mIndicatorColor = a.getColor(R.styleable.BiDirectionalSeekBar_indicatorColor,
+        mIndicatorColor = a.getColor(R.styleable.BiDirectionalSeekBar_BDS_indicatorColor,
                 resolved ? indicatorTypedValue.data : 0xFF6200EE);
 
-        mStickColor = a.getColor(R.styleable.BiDirectionalSeekBar_stickColor, secTextColor);
-        mZeroStickColor = a.getColor(R.styleable.BiDirectionalSeekBar_zeroStickColor, priTextColor);
-        mLabelColor = a.getColor(R.styleable.BiDirectionalSeekBar_labelColor, priTextColor);
+        mStickColor = a.getColor(R.styleable.BiDirectionalSeekBar_BDS_stickColor, secTextColor);
+        mZeroStickColor = a.getColor(R.styleable.BiDirectionalSeekBar_BDS_zeroStickColor, priTextColor);
+        mLabelColor = a.getColor(R.styleable.BiDirectionalSeekBar_BDS_labelColor, priTextColor);
 
-        mStickGap = a.getDimension(R.styleable.BiDirectionalSeekBar_stickGap, STICK_WIDTH);
-        mStyle = a.getInt(R.styleable.BiDirectionalSeekBar_seekBar_Style, STYLE_CURVE);
+        mStickGap = a.getDimension(R.styleable.BiDirectionalSeekBar_BDS_stickGap, STICK_WIDTH);
+        mStyle = a.getInt(R.styleable.BiDirectionalSeekBar_BDS_seekBar_Style, STYLE_CURVE);
 
         a.recycle();
 

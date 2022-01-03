@@ -5,55 +5,55 @@
         Set color to the indicator and label background.
         By default, it uses theme primary color.
         -->
-        <attr name="indicatorColor" />
+        <attr name="BDS_indicatorColor" format="color"/>
         <!--
         Set color to the progress sticks. By default, it uses theme secondary text color.
         -->
-        <attr name="stickColor" format="color" />
+        <attr name="BDS_stickColor" format="color" />
         <!--    Set gap between the progress sticks.-->
-        <attr name="stickGap" format="dimension" />
+        <attr name="BDS_stickGap" format="dimension" />
         <!--
         Set color to the stick at zero (0) progress
         This is ignored if (minValue > 0) or (maxValue < 0).
         By default, it uses theme primary text color.
         -->
-        <attr name="zeroStickColor" format="color" />
+        <attr name="BDS_zeroStickColor" format="color" />
         <!--
         Set color to the label text. This is useful when background color and text color of the label are mismatching.
         By default, it uses theme primary text color.
         -->
-        <attr name="labelColor" format="color" />
+        <attr name="BDS_labelColor" format="color" />
         <!--
         Set color to the title text.
         -->
-        <attr name="seekBarTitleColor" format="color" />
+        <attr name="BDS_seekBarTitleColor" format="color" />
         <!-- DEFAULT - 0 -->
-        <attr name="minValue" format="integer" />
+        <attr name="BDS_minValue" format="integer" />
         <!-- DEFAULT - 100 -->
-        <attr name="maxValue" format="integer" />
+        <attr name="BDS_maxValue" format="integer" />
         <!--    Set progress to the seekBar.
         if (progress &lt; minValue) or (progress &gt; maxValue),
         then the progress becomes minValue or maxValue respectively.
         <p>
         DEFAULT - 0-->
-        <attr name="progress" format="integer" />
+        <attr name="BDS_progress" format="integer" />
         <!--    Set whether the percentage sign (%) should be shown with progress label. True if (%) should be shown false otherwise.
         <p>
         DEFAULT - False-->
-        <attr name="percentageSign" format="boolean" />
+        <attr name="BDS_percentageSign" format="boolean" />
         <!--    Set title to the seekBar.-->
-        <attr name="seekBarTitle" format="string" />
+        <attr name="BDS_seekBarTitle" format="string" />
         <!--    Set the size of which the title should be. If tiny is set, then the title size will be tiny. Otherwise it will be of normal size.
         <p>
         DEFAULT - normal-->
-        <attr name="seekBarTitleSize" format="enum">
+        <attr name="BDS_seekBarTitleSize" format="enum">
             <enum name="tiny" value="0" />
             <enum name="normal" value="1" />
         </attr>
         <!--    Set the style of the seekBar.
         <p>
         DEFAULT - curve-->
-        <attr name="seekBar_Style" format="enum">
+        <attr name="BDS_seekBar_Style" format="enum">
             <enum name="curve" value="0" />
             <enum name="linear" value="1" />
         </attr>
