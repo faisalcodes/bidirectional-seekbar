@@ -35,7 +35,7 @@ allprojects {
 add the following to module build.gradle
 ```groovy
 
-implementation 'com.github.faisalcodes:bidirectional-seekbar:1.0.1'
+implementation 'com.github.faisalcodes:bidirectional-seekbar:1.0.3'
 
 ```
 ## How to use
