@@ -52,8 +52,8 @@ afterEvaluate {
             // Creates a Maven publication called "release".
             release(MavenPublication) {
                 from components.release
-                groupId = 'com.github.faisalcoded'
-                artifactId = 'bidirectional-seekbar'
+                groupId = 'com.android.application'
+                artifactId = 'bidirectionalseekbar'
                 version = '1.0'
             }
         }
