@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Faisal Khan (faisalkhan100@gmail.com)
+ * Copyright (c) 2021 Faisal Khan
  * All Rights Reserved.
  */
 package com.android.faisalkhan.seekbar.bidirectionalseekbar;
